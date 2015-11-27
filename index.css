@@ -14,7 +14,6 @@ main
     display: flex;
     align-items: center;
     justify-content: space-between;
-    perspective: 400px;
 }
 
 .invisible-input
@@ -29,6 +28,26 @@ main
     flex-direction: column;
     align-items: center;
     position: relative;
+    perspective: 200px;
+    transform-style: preserve-3d;
+}
+
+.front-side
+{
+    border: 1px solid green;
+}
+
+.back-side
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(72, 72, 72);
+    transform: translateZ(-2px) rotateX(180deg);
+    border: 1px solid red;
+    z-index: -1;
 }
 
 .vegetables img
@@ -48,6 +67,7 @@ main
     display: none;
 }
 
+
 [id='cucumber']:checked ~ .main-content .cucumber:hover .hover-background,
 [id='cabbage']:checked ~ .main-content .cabbage:hover .hover-background,
 [id='eggplant']:checked ~ .main-content .eggplant:hover .hover-background,
@@ -65,13 +85,13 @@ main
     background-color: rgba(72, 72, 72, .8);
 }
 
-[id='cucumber']:checked ~ .main-content .cucumber:hover .recipe,
-[id='cabbage']:checked ~ .main-content .cabbage:hover .recipe,
-[id='eggplant']:checked ~ .main-content .eggplant:hover .recipe,
-[id='parrot']:checked ~ .main-content .parrot:hover .recipe,
-[id='pepper']:checked ~ .main-content .pepper:hover .recipe,
-[id='pumpkin']:checked ~ .main-content .pumpkin:hover .recipe,
-[id='tomato']:checked ~ .main-content .tomato:hover .recipe
+[id='cucumber']:checked ~ .main-content .cucumber:hover .recipe-link,
+[id='cabbage']:checked ~ .main-content .cabbage:hover .recipe-link,
+[id='eggplant']:checked ~ .main-content .eggplant:hover .recipe-link,
+[id='parrot']:checked ~ .main-content .parrot:hover .recipe-link,
+[id='pepper']:checked ~ .main-content .pepper:hover .recipe-link,
+[id='pumpkin']:checked ~ .main-content .pumpkin:hover .recipe-link,
+[id='tomato']:checked ~ .main-content .tomato:hover .recipe-link
 {
     border: 2px solid #fff;
     position: relative;
@@ -83,50 +103,52 @@ main
     text-align: center;
 }
 
-[id='cucumber']:checked ~ .main-content .cucumber:hover .recipe
+[id='cucumber']:checked ~ .main-content .cucumber:hover .recipe-link
 {
     height: 75%;
     top: 10%;
 }
 
-[id='cabbage']:checked ~ .main-content .cabbage:hover .recipe
+[id='cabbage']:checked ~ .main-content .cabbage:hover .recipe-link
 {
     height: 65%;
     top: 17%;
 }
 
-[id='parrot']:checked ~ .main-content .parrot:hover .recipe
+[id='parrot']:checked ~ .main-content .parrot:hover .recipe-link
 {
     width: 60%;
     left: 19%;
 }
 
-[id='pepper']:checked ~ .main-content .pepper:hover .recipe
+[id='pepper']:checked ~ .main-content .pepper:hover .recipe-link
 {
     height: 60%;
     top: 19%;
 }
 
-[id='pumpkin']:checked ~ .main-content .pumpkin:hover .recipe
+[id='pumpkin']:checked ~ .main-content .pumpkin:hover .recipe-link
 {
     height: 60%;
     top: 19%;
 }
 
-[id='tomato']:checked ~ .main-content .tomato:hover .recipe
+[id='tomato']:checked ~ .main-content .tomato:hover .recipe-link
 {
     height: 75%;
     top: 10%;
 }
 
-[id='cucumber']:checked ~ .main-content .cucumber:hover .hover-background p,
-[id='cabbage']:checked ~ .main-content .cabbage:hover .hover-background p,
-[id='eggplant']:checked ~ .main-content .eggplant:hover .hover-background p,
-[id='parrot']:checked ~ .main-content .parrot:hover .hover-background p,
-[id='pepper']:checked ~ .main-content .pepper:hover .hover-background p,
-[id='pumpkin']:checked ~ .main-content .pumpkin:hover .hover-background p,
-[id='tomato']:checked ~ .main-content .tomato:hover .hover-background p
+
+[id='cucumber']:checked ~ .main-content .cucumber:hover .hover-background .recipe-label,
+[id='cabbage']:checked ~ .main-content .cabbage:hover .hover-background .recipe-label,
+[id='eggplant']:checked ~ .main-content .eggplant:hover .hover-background .recipe-label,
+[id='parrot']:checked ~ .main-content .parrot:hover .hover-background .recipe-label,
+[id='pepper']:checked ~ .main-content .pepper:hover .hover-background .recipe-label,
+[id='pumpkin']:checked ~ .main-content .pumpkin:hover .hover-background .recipe-label,
+[id='tomato']:checked ~ .main-content .tomato:hover .hover-background .recipe-label
 {
+    display: block;
     color: #fff;
     margin-top: 30%;
     font-size: 1.5em;
@@ -197,7 +219,12 @@ article.vegetables
 [id='parrot']:checked ~ .main-content .pepper
 {
     z-index: 6;
-    transform: rotateY(-30deg);
+    /*transform: rotateY(-30deg);*/
+    -webkit-transform: rotate3d(0, 1, 0, -30deg);
+    -moz-transform: rotate3d(0, 1, 0, -30deg);
+    -ms-transform: rotate3d(0, 1, 0, -30deg);
+    -o-transform: rotate3d(0, 1, 0, -30deg);
+    transform: rotate3d(0, 1, 0, -30deg);
 }
 
 [id='parrot']:checked ~ .main-content .pumpkin
@@ -487,3 +514,35 @@ article.vegetables
     z-index: 6;
     transform: rotateY(30deg) scaleY(1.2);
 }
+
+
+[id='recipe-4']:checked ~ .main-content .parrot
+{
+    animation: openRecipe 3s ease-out forwards;
+}
+
+.vegetables
+{
+    animation: openRecipe 9s ease-in forwards;
+}
+
+@keyframes openRecipe {
+    /*30% {
+        transform: translate3d(0, -50%, 3em);
+    }*/
+    60% {
+        -webkit-transform: translate3d(0, -50%, 3em)  rotate3d(1, 0, 0, 200deg);
+        -moz-transform: translate3d(0, -50%, 3em)  rotate3d(1, 0, 0, 200deg);
+        -ms-transform: translate3d(0, -50%, 3em)  rotate3d(1, 0, 0, 200deg);
+        -o-transform: translate3d(0, -50%, 3em)  rotate3d(1, 0, 0, 200deg);
+        transform: translate3d(0, -50%, 3em)  rotate3d(1, 0, 0, 200deg);
+    }
+    100% {
+        -webkit-transform: translate3d(0, -50%, 3em)  rotate3d(1, 0, 0, 360deg);
+        -moz-transform: translate3d(0, -50%, 3em)  rotate3d(1, 0, 0, 360deg);
+        -ms-transform: translate3d(0, -50%, 3em)  rotate3d(1, 0, 0, 360deg);
+        -o-transform: translate3d(0, -50%, 3em)  rotate3d(1, 0, 0, 360deg);
+        transform: translate3d(0, -50%, 3em)  rotate3d(1, 0, 0, 360deg);
+    }
+}
+
